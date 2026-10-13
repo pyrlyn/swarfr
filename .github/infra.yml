@@ -1,0 +1,9 @@
+# Configuration for pyrlyn/ci's ci.yml, called from pipeline.yml (docs/config.md in
+# pyrlyn/ci). Replaces the former pyrlyn/ci pipeline.yml call; Rust CI stays in ci.yml.
+version: 1
+
+codeql:
+  languages: [actions, rust]
+
+snyk:
+  enabled: true

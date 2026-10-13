@@ -1,1 +1,6 @@
 /target
+# Local files (pyrlyn template).
+.DS_Store
+/.serena
+.env
+.env.local
