@@ -7,3 +7,7 @@ codeql:
 
 snyk:
   enabled: true
+
+# No .NET project here: the dotnet job would only pass as a no-op (the gate counts it as passed).
+dotnet:
+  enabled: false

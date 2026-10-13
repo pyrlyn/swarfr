@@ -18,6 +18,11 @@ on:
   push:
     branches: [main]
 
+# A newer push to main supersedes the release PR refresh of an older one.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
