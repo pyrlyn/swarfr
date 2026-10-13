@@ -1,5 +1,6 @@
 # Mirrors rust-toolchain.toml for mise users; keep the two in sync.
 [tools]
+mold = { version = "2.42.1", os = ["linux"] } # linker, Linux only; mise [env] below turns it on where it is installed
 swift = "6.4.0" # SwiftPM adapter tests (tests/swiftpm.rs) run real `swift build`; 6.4 is what Xcode 27 ships, the CI macOS image
 rust = { version = "1.98", components = "rustfmt,clippy" }
 # Release tooling (T43), same pins as rtok. CI installs these through mise-action; cargo-dist
@@ -7,3 +8,12 @@ rust = { version = "1.98", components = "rustfmt,clippy" }
 # dist-workspace.toml pins it, and scripts/dist-generate.sh runs that version through mise.
 just = "1.58.0"
 git-cliff = "2.13.1" # CHANGELOG.md: `just changelog`, scripts/release.sh, release-plz
+
+[env]
+# mold as the Linux linker only where mise has installed it (clang is the driver): without mold
+# the variable is empty and the default linker stays, so a Linux machine without mold or clang
+# still builds. Not in .cargo/config.toml: a missing mold there would break every Linux build.
+# Cargo takes these only when RUSTFLAGS is unset. macOS keeps Apple ld; Windows uses rust-lld
+# through .cargo/config.toml. The probe variable stops `mise which` from recursing.
+CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS = "{% if os() == 'linux' and get_env(name='MISE_MOLD_PROBE', default='') == '' %}{{ exec(command='MISE_MOLD_PROBE=1 \"' ~ mise_bin ~ '\" which mold >/dev/null 2>&1 && echo \"-C linker=clang -C link-arg=-fuse-ld=mold\" || true') }}{% endif %}"
+CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_RUSTFLAGS = "{% if os() == 'linux' and get_env(name='MISE_MOLD_PROBE', default='') == '' %}{{ exec(command='MISE_MOLD_PROBE=1 \"' ~ mise_bin ~ '\" which mold >/dev/null 2>&1 && echo \"-C linker=clang -C link-arg=-fuse-ld=mold\" || true') }}{% endif %}"
