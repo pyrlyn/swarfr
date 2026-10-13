@@ -18,7 +18,7 @@ expanding VHDX of at least 50 GB. The system disk stays NTFS.
 Inside the guest, clone over the network:
 
 ```bash
-git clone https://github.com/listepo/swarfr
+git clone https://github.com/pyrlyn/swarfr
 cd swarfr
 ```
 
