@@ -46,3 +46,9 @@ release level="patch" *flags:
 # Regenerate CHANGELOG.md from git history (git-cliff, config in cliff.toml).
 changelog:
     git-cliff -o CHANGELOG.md
+
+# Opt-in Cranelift dev build (nightly; dev profile only, never release; not on Windows). `just cranelift check` also works.
+[unix]
+cranelift *args='build':
+    rustup component add rustc-codegen-cranelift-preview --toolchain nightly
+    cargo +nightly --config .cargo/cranelift.toml {{args}}
