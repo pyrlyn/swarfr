@@ -84,15 +84,15 @@ exports it for `dist build`. A missing `MACOS_*` secret fails the macOS job — 
 release is refused. Set them from a machine that has the certificate:
 
 ```bash
-base64 -i DeveloperID.p12 | gh secret set MACOS_CERTIFICATE -R listepo/swarfr
+base64 -i DeveloperID.p12 | gh secret set MACOS_CERTIFICATE -R pyrlyn/swarfr
 ```
 
 ```bash
-gh secret set MACOS_CERTIFICATE_PWD -R listepo/swarfr
+gh secret set MACOS_CERTIFICATE_PWD -R pyrlyn/swarfr
 ```
 
 ```bash
-gh secret set RELEASE_PLZ_TOKEN -R listepo/swarfr
+gh secret set RELEASE_PLZ_TOKEN -R pyrlyn/swarfr
 ```
 
 Notarisation is off, as in rtok; its `docs/release.md` has the notarytool workflow if that
@@ -102,14 +102,14 @@ quarantine attribute; notarisation would add the archive downloaded in a browser
 ## Homebrew
 
 dist builds `swarfr.rb` as a release asset (`installers` includes `homebrew`, `tap =
-"listepo/homebrew-tap"`) and does **not** push it: `publish-jobs` stays without `"homebrew"`, so
+"pyrlyn/homebrew-tap"`) and does **not** push it: `publish-jobs` stays without `"homebrew"`, so
 there is no `HOMEBREW_TAP_TOKEN` here. Pulling the formula into
-[`listepo/homebrew-tap`](https://github.com/listepo/homebrew-tap) the way its `sync-rtok.yml`
+[`pyrlyn/homebrew-tap`](https://github.com/pyrlyn/homebrew-tap) the way its `sync-rtok.yml`
 does for rtok is R7 in `roadmap.md`, with crates.io.
 
 ## ketch
 
 [`ketch.toml`](../ketch.toml) is swarfr's ketch manifest, as rtok has one: it names the dist
 archive for each host outright and excludes the updater and the source tarball, so `ketch
-install listepo/swarfr` cannot pick either. `ketch registry push` sends it to the registry;
+install pyrlyn/swarfr` cannot pick either. `ketch registry push` sends it to the registry;
 `ketch registry validate` on a directory holding `swarfr/ketch.toml` checks it first.
