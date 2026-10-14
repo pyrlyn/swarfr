@@ -47,10 +47,11 @@ hardlink groups as one unit.
 
 ## Install
 
-Releases carry binaries for Apple Silicon macOS, x86_64 Linux and x86_64 Windows:
+Releases carry binaries for Apple Silicon macOS, x86_64 Linux and x86_64 Windows. Every release is
+a dev-build prerelease, so the installer link names the version (v0.1.1 is the newest):
 
 ```bash
-curl --proto '=https' --tlsv1.2 -LsSf https://github.com/pyrlyn/swarfr/releases/latest/download/swarfr-installer.sh | sh
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/pyrlyn/swarfr/releases/download/v0.1.1/swarfr-installer.sh | sh
 ```
 
 Or `ketch install pyrlyn/swarfr`, or build from a checkout — see [docs/usage.md](docs/usage.md#install).

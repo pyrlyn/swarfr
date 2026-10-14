@@ -7,10 +7,12 @@ does is in `DESIGN.md`; the numbers behind the defaults are in `docs/bench.md`.
 
 Every release on the [releases page](https://github.com/pyrlyn/swarfr/releases) carries
 binaries for Apple Silicon macOS (signed), x86_64 Linux and x86_64 Windows. The shell installer
-puts `swarfr` and its updater `swarfr-update` into cargo's bin directory:
+puts `swarfr` and its updater `swarfr-update` into cargo's bin directory. Every release is published
+as a dev-build prerelease, which GitHub's `releases/latest` link skips, so the command names the
+version (v0.1.1 is the newest):
 
 ```
-curl --proto '=https' --tlsv1.2 -LsSf https://github.com/pyrlyn/swarfr/releases/latest/download/swarfr-installer.sh | sh
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/pyrlyn/swarfr/releases/download/v0.1.1/swarfr-installer.sh | sh
 ```
 
 `swarfr-update` later fetches the newest release in place. With
