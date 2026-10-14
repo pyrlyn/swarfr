@@ -19,9 +19,7 @@ on:
       # and a green "Bump and release" reads as a release. The preview is local only —
       # `scripts/release.sh <level> --dry-run` — so every run of this workflow ships.
 
-permissions:
-  contents: write # push the version commit
-  actions: write # dispatch release.yml
+permissions: {}
 
 jobs:
   # The same gate every pull request passes, on the commit this release is cut from. The
@@ -29,12 +27,18 @@ jobs:
   # CHANGELOG.md, so what is tested here is the code that ships.
   verify:
     uses: ./.github/workflows/verify.yml
+    permissions:
+      contents: read
 
   bump:
     needs: verify
     runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write # push the version commit
+      actions: write # dispatch release.yml
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           # Tags decide whether the current version was already released; the changelog reads history.
           fetch-depth: 0

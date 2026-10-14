@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "file": ".github/workflows/release.yml",
+      "rule": "excessive-permissions",
+      "fingerprint": "b96eb14dd5b1d621",
+      "context": "829eff0266c816ee",
+      "occurrence": 0,
+      "message": "\"contents: write\" is granted to every job of the workflow, which lets any of them push commits and tags and create or delete releases. set \"permissions: {}\" at the workflow level and grant \"contents: write\" only to the job which needs it"
+    },
+    {
+      "file": ".github/workflows/release.yml",
+      "rule": "unverified-download",
+      "fingerprint": "83593177056b741e",
+      "context": "b82c5ecc18ad5e20",
+      "occurrence": 0,
+      "message": "the script downloaded from \"https://github.com/axodotdev/cargo-dist/releases/download/v0.32.0/cargo-dist-installer.sh\" is run by \"sh\" without being verified, so whoever controls that server or the connection to it controls this job. if it installs a tool, mise can install it and record its checksum in mise.lock (jdx/mise-action in CI). otherwise check the checksum or signature (sha256sum -c, gpg --verify, cosign verify-blob or gh attestation verify) before running the file"
+    },
+    {
+      "file": ".github/workflows/release.yml",
+      "rule": "template-injection",
+      "fingerprint": "7651b9211cb0dc99",
+      "context": "84c9534e7e387cce",
+      "occurrence": 0,
+      "message": "\"inputs.tag\" is an input chosen by whoever runs this, which is not validated and can hold shell syntax. avoid using it directly in inline scripts. instead, pass it through an environment variable. see https://docs.github.com/en/actions/reference/security/secure-use#good-practices-for-mitigating-script-injection-attacks for more details"
+    },
+    {
+      "file": ".github/workflows/release.yml",
+      "rule": "unverified-download",
+      "fingerprint": "10f4d6cab0cf62b1",
+      "context": "84fb9e202fde43c8",
+      "occurrence": 0,
+      "message": "the script downloaded from \"https://sh.rustup.rs\" is run by \"sh\" without being verified, so whoever controls that server or the connection to it controls this job. if it installs a tool, mise can install it and record its checksum in mise.lock (jdx/mise-action in CI). otherwise check the checksum or signature (sha256sum -c, gpg --verify, cosign verify-blob or gh attestation verify) before running the file"
+    },
+    {
+      "file": ".github/workflows/release.yml",
+      "rule": "shellcheck",
+      "fingerprint": "5e6f650db1ae1e68",
+      "context": "47abb0d086eacf94",
+      "occurrence": 0,
+      "message": "shellcheck reported issue in this script: SC2086:info:3:30: Double quote to prevent globbing and word splitting"
+    },
+    {
+      "file": ".github/workflows/release.yml",
+      "rule": "shellcheck",
+      "fingerprint": "5d0bee5750acd9d5",
+      "context": "3edffa2c095c86bd",
+      "occurrence": 0,
+      "message": "shellcheck reported issue in this script: SC2129:style:2:1: Consider using { cmd1; cmd2; } >> file instead of individual redirects"
+    },
+    {
+      "file": ".github/workflows/release.yml",
+      "rule": "shellcheck",
+      "fingerprint": "2c00ec9c2c9e4de2",
+      "context": "329518a306f370d9",
+      "occurrence": 0,
+      "message": "shellcheck reported issue in this script: SC2129:style:5:1: Consider using { cmd1; cmd2; } >> file instead of individual redirects"
+    },
+    {
+      "file": ".github/workflows/release.yml",
+      "rule": "shellcheck",
+      "fingerprint": "f101905ea3887ae2",
+      "context": "c1aad07308aa62fe",
+      "occurrence": 0,
+      "message": "shellcheck reported issue in this script: SC2086:info:2:29: Double quote to prevent globbing and word splitting"
+    },
+    {
+      "file": ".github/workflows/release.yml",
+      "rule": "pipeline-without-pipefail",
+      "fingerprint": "34cb4e313a1302ad",
+      "context": "f52c7a61d0b52228",
+      "occurrence": 0,
+      "message": "failure of \"wc\" is hidden in the pipeline \"wc -c <\\\"$f\\\" | tr -d ' '\" because the default shell runs \"bash -e {0}\" without pipefail. add \"set -o pipefail\" before the pipeline or use \"shell: bash\", which runs with pipefail"
+    },
+    {
+      "file": ".github/workflows/release.yml",
+      "rule": "pipeline-without-pipefail",
+      "fingerprint": "4ba3dd274546563d",
+      "context": "24e36d1df59a9333",
+      "occurrence": 0,
+      "message": "failure of \"sed\" is hidden in the pipeline \"sed -n '/^## Download sizes$/,$p' \\\"$RUNNER_TEMP/notes.txt\\\" |...\" because the default shell runs \"bash -e {0}\" without pipefail. add \"set -o pipefail\" before the pipeline or use \"shell: bash\", which runs with pipefail"
+    },
+    {
+      "file": ".github/workflows/release.yml",
+      "rule": "shellcheck",
+      "fingerprint": "b2a420cdf73bcf28",
+      "context": "f85f1bafa66a3cf0",
+      "occurrence": 0,
+      "message": "shellcheck reported issue in this script: SC2016:info:27:38: Expressions don't expand in single quotes, use double quotes for that"
+    }
+  ]
+}

@@ -18,12 +18,17 @@ on:
   push:
     branches: [main]
 
+# A newer push to main supersedes the release PR refresh of an older one.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
 jobs:
   release-plz:
-    uses: pyrlyn/ci/.github/workflows/release-plz.yml@c875cd763ad0c4abbd936e480be5752330d3b66b # main 2026-10-07
+    uses: pyrlyn/ci/.github/workflows/release-plz.yml@9748fe1e5a2007d695e4e1a1d9b16492660dd8bc # main
     permissions:
       contents: write # the release branch
       pull-requests: write # the release PR
