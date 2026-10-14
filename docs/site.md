@@ -3,14 +3,14 @@ title: swarfr
 tagline: Sweep the swarf out of Cargo target/ directories without deleting what you still build with and without slowing builds.
 repo: https://github.com/pyrlyn/swarfr
 install: "cargo install --locked --git https://github.com/pyrlyn/swarfr swarfr"
-version: "0.1.0"
+version: "0.1.1"
 accent: "#D9A441"
 order: 6
 ---
 
 <!-- Website copy for the pyrlyn project site, copied to pyrlyn/landing as
 content/projects/swarfr.md; front matter follows CONTENT_CONTRACT.md in that repository.
-Sources (checked 2026-10-14): README.md, docs/usage.md and docs/passes.md; version from the latest GitHub release (v0.1.0). The accent is a placeholder: the repository has no brand colour yet. -->
+Sources (checked 2026-10-14): README.md, docs/usage.md and docs/passes.md; version from the newest GitHub release (v0.1.1, a prerelease). The accent is a placeholder: the repository has no brand colour yet. -->
 
 ## Overview
 
