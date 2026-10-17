@@ -76,6 +76,7 @@ Exit code `2` means a build held a lock and the run should be retried later.
 | | |
 | --- | --- |
 | [docs/usage.md](docs/usage.md) | User guide: install, the first five minutes, what is safe and what deletes |
+| [docs/examples.md](docs/examples.md) | Copy-paste recipes: inventory, dry runs, lossy passes, warm worktrees, the daemon |
 | [docs/passes.md](docs/passes.md) | Every command, pass and flag; Cargo home, Go, SwiftPM, .NET and CMake |
 | [docs/configuration.md](docs/configuration.md) | `config.toml` keys and per-repository rules |
 | [docs/platforms.md](docs/platforms.md) | What works on which filesystem; hardlinks vs clones |
