@@ -25,7 +25,8 @@ jobs:
       fail-fast: false
       matrix:
         os: ${{ fromJSON(vars.MACOS_CI_DISABLED == 'true' && '["ubuntu-latest"]' || '["ubuntu-latest", "macos-latest"]') }}
-    runs-on: ${{ matrix.os }}
+    # TEMP: self-hosted xcode-27-local until hosted xcode-27 exists (fork PRs keep the hosted label)
+    runs-on: ${{ startsWith(matrix.os, 'macos') && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && 'xcode-27-local' || matrix.os }}
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
