@@ -192,7 +192,10 @@ fn dropping_a_real_cache_rebuilds_nothing() {
     assert_eq!((pass.planned, pass.applied), (1, 1), "{pass:?}");
     assert!(!cache.exists());
     let after = allocated_bytes(&target);
-    assert!(after < before, "before {before}, after {after}, cache {cache_bytes}");
+    assert!(
+        after < before,
+        "before {before}, after {after}, cache {cache_bytes}"
+    );
     // Nothing is rebuilt at all: the cache is not part of cargo's fingerprint, so the cost
     // lands on the next edit of a workspace member, as one non-incremental rebuild of it.
     fixture.assert_fresh(&target);
