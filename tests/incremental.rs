@@ -183,6 +183,7 @@ fn dropping_a_real_cache_rebuilds_nothing() {
     let cache = target.join("debug/incremental");
     assert!(cache.is_dir(), "cargo built nothing incrementally");
     let before = allocated_bytes(&target);
+    let cache_bytes = allocated_bytes(&cache);
 
     // `--incremental-idle-days 0`: this profile was built seconds ago and is still chosen.
     let report = run(&fixture.root, 0, &named());
@@ -190,7 +191,11 @@ fn dropping_a_real_cache_rebuilds_nothing() {
     let pass = &report.passes[0];
     assert_eq!((pass.planned, pass.applied), (1, 1), "{pass:?}");
     assert!(!cache.exists());
-    assert!(allocated_bytes(&target) < before);
+    let after = allocated_bytes(&target);
+    assert!(
+        after < before,
+        "before {before}, after {after}, cache {cache_bytes}"
+    );
     // Nothing is rebuilt at all: the cache is not part of cargo's fingerprint, so the cost
     // lands on the next edit of a workspace member, as one non-incremental rebuild of it.
     fixture.assert_fresh(&target);

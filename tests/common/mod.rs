@@ -161,14 +161,15 @@ impl Fixture {
 
 const ORACLE_BUILDS: [&[&str]; 2] = [&["build"], &["test", "--no-run"]];
 
-/// A cargo run in `ws` writing into `target`, offline and speaking JSON. `CARGO_INCREMENTAL`
-/// goes, so the fixture builds the way the dev profile says: CI caches set it to 0, and a build
+/// A cargo run in `ws` writing into `target`, offline and speaking JSON. `CARGO_INCREMENTAL=1`,
+/// so the fixture builds the way the dev profile says: CI caches set it to 0, and a cargo config
+/// above the temp dir (such as `$CARGO_HOME/config.toml` on a runner) may turn it off; a build
 /// without an incremental cache leaves the `incremental` pass nothing to drop.
 pub fn cargo_at(ws: &Path, target: &Path, args: &[&str]) -> Command {
     let mut cmd = Command::new(std::env::var_os("CARGO").unwrap_or_else(|| "cargo".into()));
     cmd.current_dir(ws)
         .env("CARGO_TARGET_DIR", target)
-        .env_remove("CARGO_INCREMENTAL")
+        .env("CARGO_INCREMENTAL", "1")
         .args(args)
         .args(["--offline", "--message-format=json"])
         .stdout(Stdio::null())
