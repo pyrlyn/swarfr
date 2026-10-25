@@ -7,8 +7,8 @@ changelog_config = "cliff.toml"
 # Not on crates.io (R7) — a release is a git tag plus dist archives.
 publish = false
 # With no registry copy to compare against, release-plz would read the package as never
-# released and propose the version already in Cargo.toml every time — rtok met exactly that
-# (its docs/release.md). ketch's answer: read the `v*` tags instead.
+# released and propose the version already in Cargo.toml every time — the token CLI met exactly that
+# (its docs/release.md). The package manager's answer: read the `v*` tags instead.
 git_only = true
 # The tag dist creates; release-plz reads it to know which version is out.
 git_tag_name = "v{{ version }}"

@@ -14,7 +14,7 @@ ci = "github"
 installers = ["shell", "homebrew"]
 tap = "listepo/homebrew-tap"
 # Target platforms to build apps for (Rust target-triple syntax)
-# Apple Silicon + Linux + Windows, the same three as rtok. Intel macOS is left out: its
+# Apple Silicon + Linux + Windows, the same three as the token CLI. Intel macOS is left out: its
 # runners are scarce and would set the release wall-clock.
 targets = ["aarch64-apple-darwin", "x86_64-unknown-linux-gnu", "x86_64-pc-windows-msvc"]
 # Where to host releases

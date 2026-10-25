@@ -1,7 +1,7 @@
-# swarfr as a ketch package (T43).
+# swarfr as a package manager package (T43).
 #
 # Inference from github:listepo/swarfr should already work; this file is what
-# `ketch push` sends to the registry and what docs / `ketch info` show.
+# `the package manager push` sends to the registry and what docs / `the package manager info` show.
 # Schema: listepo/ketch docs/MANIFESTS.md.
 
 name = "swarfr"

@@ -16,7 +16,7 @@ curl --proto '=https' --tlsv1.2 -LsSf https://github.com/pyrlyn/swarfr/releases/
 ```
 
 `swarfr-update` later fetches the newest release in place. With
-[ketch](https://github.com/pyrlyn/ketch), `ketch install pyrlyn/swarfr` does the same. How a release is cut is in
+the package manager, `the package manager install pyrlyn/swarfr` does the same. How a release is cut is in
 `docs/release.md`.
 
 The crate is not on crates.io yet. Or build it from a checkout, with the toolchain the repository

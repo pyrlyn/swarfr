@@ -26,11 +26,11 @@ New bugs, dead code and moves from a read-only Cursor cloud review of `main` at 
 | T63 | P2 | dead code | confirmed | `src/config.rs:136-138` (`Config::skips`); `src/inventory.rs:91-96` (`inventory::discover`); `src/index.rs:135-141` (`HashIndex::len`/`is_empty`) | Used only by tests. Delete them or put them under `#[cfg(test)]` (keep `HashIndex` methods if they are library API). Every `Cargo.toml` dependency is used. |
 | T64 | P2 | move | confirmed | `src/session.rs:882-926` (`git`, `git_command`) → a shared crate such as crates `git-changed-paths` | Its own comment (`:884-887`) says the three copies must not drift (`GIT_OPTIONAL_LOCKS=0`, missing-git error, strict UTF-8). |
 | T65 | P2 | move | confirmed | `last_built` in `src/eco/cargo/mod.rs:151-160` → an `eco` helper | CMake, .NET and SwiftPM call it too (`cmake.rs:63-64`, `dotnet.rs:80-81`, `swiftpm.rs:87-88`). Move it first so T54's fix lands in one place. |
-| T66 | P2 | move | suspected | `scripts/dist-generate.sh`, `scripts/release.sh` → a `pyrlyn/ci` reusable release step | Only if they really are near-copies of the rtok/runa scripts (not verified). `bump.yml` stays local. |
+| T66 | P2 | move | suspected | `scripts/dist-generate.sh`, `scripts/release.sh` → a `pyrlyn/ci` reusable release step | Only if they really are near-copies of the token CLI/runa scripts (not verified). `bump.yml` stays local. |
 
 Already tracked here, not added again: deleting a profile while the engine still holds its open `.cargo-lock` (`src/engine.rs:359-361`, `:238-253`, `:509`), which fails on Windows, is T49.
 
-Not added: retargeting `ketch.toml`/`Cargo.toml` URLs to `pyrlyn/swarfr` applies only if the repo moves.
+Not added: retargeting `the package manager.toml`/`Cargo.toml` URLs to `pyrlyn/swarfr` applies only if the repo moves.
 
 | # | Status | Priority | Complexity | Readiness | Agent |
 | --- | --- | --- | --- | --- | --- |
@@ -54,13 +54,13 @@ that finding in `docs/research.md`) and `docs/architecture.md` (the monorepo tas
 
 ### T43. Release pipeline: GitHub releases with binaries
 
-Decided by the creator: release swarfr the way `rtok` does. Split out of R7, which keeps
+Decided by the creator: release swarfr the way the token CLI does. Split out of R7, which keeps
 crates.io and the tap's own sync workflow. Done: merging a `release: vX.Y.Z` pull request, or
 running Actions → **Bump and release**, gates on the CI checks, tags `vX.Y.Z` and publishes a
 GitHub Release with signed macOS, Linux and Windows archives, a shell installer, a self-updater
 and a Homebrew formula asset — and `docs/release.md` says how.
 
-Creator's answers: cargo-dist, not ketch's hand-written workflow; macOS signing on, from
+Creator's answers: cargo-dist, not the package manager's hand-written workflow; macOS signing on, from
 `MACOS_CERTIFICATE` / `MACOS_CERTIFICATE_PWD` (the creator sets them, with `RELEASE_PLZ_TOKEN`);
 Homebrew as a release asset only — nothing touches `listepo/homebrew-tap` here.
 

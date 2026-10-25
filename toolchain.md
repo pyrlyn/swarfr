@@ -25,10 +25,10 @@ too slow, see `DESIGN.md`).
 | zip | system (macOS, most Linux distributions), optional | `tests/go.rs`: a module zip for the offline proxy dir, skipped without it | https://infozip.sourceforge.net/Zip.html |
 | lima | global (brew / mise) | A Linux VM with a btrfs loopback image: the only way to test the Linux half from a Mac | https://github.com/lima-vm/lima |
 | UTM | global (brew), optional | A Windows 11 ARM guest: where the suite runs (T24). Not installed by this repository. `docs/windows.md` | https://github.com/utmapp/UTM |
-| ketch | see its README | Installs swarfr | https://github.com/listepo/ketch |
-| swarfr | `ketch` | Lossless cleanup of `target/` after tests | https://github.com/listepo/swarfr |
+| the package manager | see its README | Installs swarfr | https://github.com/listepo/ketch |
+| swarfr | the package manager | Lossless cleanup of `target/` after tests | https://github.com/listepo/swarfr |
 
-## ketch
+## The package manager
 
 | Package | Where | Source | Why here |
 | --- | --- | --- | --- |

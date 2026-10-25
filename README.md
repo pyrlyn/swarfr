@@ -54,7 +54,7 @@ a dev-build prerelease, so the installer link names the version (v0.1.1 is the n
 curl --proto '=https' --tlsv1.2 -LsSf https://github.com/pyrlyn/swarfr/releases/download/v0.1.1/swarfr-installer.sh | sh
 ```
 
-Or `ketch install pyrlyn/swarfr`, or build from a checkout — see [docs/usage.md](docs/usage.md#install).
+Or `the package manager install pyrlyn/swarfr`, or build from a checkout — see [docs/usage.md](docs/usage.md#install).
 
 ## Usage
 

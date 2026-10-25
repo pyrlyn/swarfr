@@ -8,7 +8,7 @@ sub-agents and spot-checked against crates.io / GitHub APIs and the Inside Rust 
 
 The claim below that every target dir was "built today" and that there were "no idle dirs" was
 wrong — it came from an unverified sub-agent report. A scripted inventory found that **30 target
-dirs, 113.9 GB of the ~158 GB, sit in `rtok` worktree checkouts that `git worktree list` no longer
+dirs, 113.9 GB of the ~158 GB, sit in the token CLI worktree checkouts that `git worktree list` no longer
 registers**, last built 6–7 days earlier, with no build lock held. So removing whole idle /
 orphaned targets is the single largest lever on this machine (~72%), ahead of compression and
 dedupe, which apply to the remaining live targets. The in-target numbers (file classes,
@@ -40,14 +40,14 @@ caught these dirs; nothing existing detects them as orphaned worktrees.
 | --- | --- |
 | Disk | 926 GiB, 100% used, 1.1–3.6 GiB free during the session |
 | Cargo target dirs under the checkout root | 44 dirs, ~158 GB |
-| of which worktrees of `rtok` with a `target/` | 30 |
-| Largest | `rtok/.claude/worktrees/graph-perf` 17.7 GB, `rtok-gate-sep` 13.9 GB, `rtok` 11–14.8 GB |
+| of which worktrees of the token CLI with a `target/` | 30 |
+| Largest | `the token CLI/.claude/worktrees/graph-perf` 17.7 GB, `tokcli-gate-sep` 13.9 GB, the token CLI 11–14.8 GB |
 | Last built | every target dir: today → no idle dirs to drop by age |
-| Files older than 7 d inside `rtok/target/debug` | ~50 MB |
+| Files older than 7 d inside `the token CLI/target/debug` | ~50 MB |
 | `~/.cargo/registry` | 618 MB (the only thing cargo-cache could clean) |
 | `~/.rustup/toolchains` | 7.1 GB |
 
-`rtok/target/debug/deps`, 10.65 GB logical (63k files):
+`the token CLI/target/debug/deps`, 10.65 GB logical (63k files):
 
 | Class | Bytes | Share | zstd-3 ratio (files > 256 KB) |
 | --- | --- | --- | --- |
@@ -62,22 +62,22 @@ Content-hash dedupe (sha256, files > 256 KB in `debug/deps`):
 
 | Pair | Duplicate bytes | Of |
 | --- | --- | --- |
-| `rtok-gate-sep` vs `rtok` | 3.07 GB | 11.02 GB (28%) |
-| worktree `T35.3` vs `rtok` | 0.89 GB | 4.15 GB (21%) |
-| worktree `graph-perf` vs `rtok` | 0.30 GB | 10.23 GB (3%) |
-| duplicates inside `rtok` alone | 2.44 GB reclaimable | 7.4 GB (33%) |
+| `tokcli-gate-sep` vs the token CLI | 3.07 GB | 11.02 GB (28%) |
+| worktree `T35.3` vs the token CLI | 0.89 GB | 4.15 GB (21%) |
+| worktree `graph-perf` vs the token CLI | 0.30 GB | 10.23 GB (3%) |
+| duplicates inside the token CLI alone | 2.44 GB reclaimable | 7.4 GB (33%) |
 | union of all four | **10.14 GB reclaimable** | 28.45 GB (36%) |
 
 Other observations:
 
-- 70,975 files in `rtok/target/debug` have link count > 1. rustc/cargo already hardlink
+- 70,975 files in `the token CLI/target/debug` have link count > 1. rustc/cargo already hardlink
   between `incremental/`, `deps/` and the profile root. Any tool that rewrites files
   (compress, dedupe) must treat a hardlink group as one unit or it will *increase* usage.
 - No file carries the APFS `compressed` flag today.
-- `rtok` profiles are already tuned (`debug = "line-tables-only"`, deps `debug = false`).
+- the token CLI profiles are already tuned (`debug = "line-tables-only"`, deps `debug = false`).
   That lever is spent.
 - `[unstable] no-embed-metadata = true` in `~/.cargo/config.toml` is ignored on stable.
-- The crate `rtok` has 10+ incremental dirs with different hashes (~3 GB): profile / feature /
+- The crate the token CLI has 10+ incremental dirs with different hashes (~3 GB): profile / feature /
   test-target variants, some certainly orphaned. Age cannot tell which.
 
 Data quality: absolute sizes moved 20–30% between runs because other agents were building.
@@ -128,7 +128,7 @@ Build-time column is qualitative or published; nothing was benchmarked here.
 | Age-based sweep inside active target | ~50 MB of 14 GB | none | none | low |
 | Drop whole idle `target/` (cargo-clean-all) | 0 today (all active) | full rebuild of dropped project | useful later, as policy | low |
 | Drop `target/` of removed / merged worktrees | unknown, likely large over time | none for live work | high | low |
-| cargo-gc style (keep what the build reports) | unmeasured; candidates: duplicate units, ~3 GB of `rtok` incremental variants | needs a build; `cargo check` redone after | medium | medium: variants used by other commands get deleted |
+| cargo-gc style (keep what the build reports) | unmeasured; candidates: duplicate units, ~3 GB of the token CLI incremental variants | needs a build; `cargo check` redone after | medium | medium: variants used by other commands get deleted |
 | Profile tuning (`line-tables-only`, deps `debug=false`) | already applied; (pub) −27…−35% | slightly faster | spent | none |
 | `incremental = false` | −5.8 GB per target (−40%) | (pub) local rebuilds 1.4–5× slower | poor for dev | none |
 | `-Zembed-metadata=no` | (pub) −5…−8% dev | none | wait for stable | nightly only |
@@ -170,7 +170,7 @@ macOS / APFS only in v1. On Linux the same idea maps to btrfs / XFS reflinks plu
 3. Phase 1, if phase 0 holds: a `just` recipe chaining existing tools after builds.
 4. Phase 2, only if the chain shows the gaps matter (hardlinks, mtime, locks, orphan worktrees,
    size cap): write `target-slim` as above.
-5. In parallel, try a repo-level `build-dir` for `rtok` worktrees in one worktree pair and measure
+5. In parallel, try a repo-level `build-dir` for the token CLI worktrees in one worktree pair and measure
    lock waiting with parallel agents; adopt only if waiting is acceptable.
 
 ## Experiments still needed (blocked on disk space)
@@ -180,7 +180,7 @@ macOS / APFS only in v1. On Linux the same idea maps to btrfs / XFS reflinks plu
 - Does cargo consider a deduped / compressed target fresh (`cargo build` → 0 rebuilt units)?
 - Do APFS compression and clones compose, and what happens to hardlink groups?
 - Real LZFSE ratio including small files; CPU cost at link time.
-- Why `graph-perf` shares only 3% with `rtok` (toolchain, flags, lockfile?).
+- Why `graph-perf` shares only 3% with the token CLI (toolchain, flags, lockfile?).
 
 ## Sources
 
