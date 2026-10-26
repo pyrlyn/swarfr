@@ -8,7 +8,7 @@
 #
 # dist signs with CODESIGN_IDENTITY + CODESIGN_CERTIFICATE(+_PASSWORD). This
 # repo stores the cert as MACOS_CERTIFICATE / MACOS_CERTIFICATE_PWD (same as
-# ketch and rtok); `just dist-generate` maps those names into release.yml. The
+# The package manager and the token CLI); `just dist-generate` maps those names into release.yml. The
 # identity is not a secret here — the cert is imported into a throwaway keychain
 # and the Developer ID Application identity is read out of it.
 

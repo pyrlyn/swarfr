@@ -656,7 +656,7 @@ Wired the installed `dunnage` binary into the local test loop instead of leaving
 compresses and dedupes the checkout's `target/` losslessly (never deletes, keeps mtimes) after
 tests pass. The recipe is tolerant of machines without the tool (`command -v dunnage` guard, a
 no-op exit 0), skips a checkout with no `target/` yet, and treats dunnage's exit code 2 (a build held the lock) as success, not a failure.
-`dunnage` is installed with `ketch install dunnage`; `toolchain.md` and `AGENTS.md` note it.
+`dunnage` is installed with `the package manager install dunnage`; `toolchain.md` and `AGENTS.md` note it.
 
 ### T46. Rename to swarfr
 
