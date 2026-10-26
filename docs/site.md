@@ -67,4 +67,4 @@ swarfr run --dry-run --lossy orphans ~/code
 - Repository: <https://github.com/pyrlyn/swarfr>
 - Documentation: <https://github.com/pyrlyn/swarfr/tree/main/docs>
 - Releases: <https://github.com/pyrlyn/swarfr/releases>
-- License: your choice of GNU GPLv3, a royalty-free license, or a commercial license (see <https://github.com/pyrlyn/swarfr#license>)
+- License: your choice of GNU GPLv3 or a commercial license (see <https://github.com/pyrlyn/swarfr#license>)
